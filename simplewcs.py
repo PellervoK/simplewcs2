@@ -171,6 +171,9 @@ class SimpleWCS:
         version = self.dlg.cbVersion.currentText()
 
         params = {"REQUEST": "GetCapabilities", "SERVICE": "WCS", "Version": version}
+        apiKey = self.dlg.leApiKey.text()
+        if len(apiKey):
+            params["api-key"] = apiKey
         querystring = urllib.parse.urlencode(params)
         url = self.checkUrlSyntax(baseUrl)
         xmlResponse = self.requestXML(url + querystring)
@@ -298,6 +301,9 @@ class SimpleWCS:
 
     def describeCoverage(self, covId):
         params = {"REQUEST": "DescribeCoverage", "SERVICE": "WCS", "VERSION": "2.0.1", "COVERAGEID": covId}
+        apiKey = self.dlg.leApiKey.text()
+        if len(apiKey):
+            params["api-key"] = apiKey
         querystring = urllib.parse.urlencode(params)
 
         describeCoverageUrl = self.wcs.getDescribeCoverageUrl()
@@ -355,6 +361,10 @@ class SimpleWCS:
 
         if year != ' ':
             params.append(('SUBSET', subset2))
+
+        apiKey = self.dlg.leApiKey.text()
+        if len(apiKey):
+            params.append(('api-key', apiKey))
 
         querystring = urllib.parse.urlencode(params)
 
